@@ -10,7 +10,6 @@ namespace expressionWpfTest1
 {
     class Expression
     {
-        public static string s = "sssss";
 
         public class StringToValue
         {
@@ -282,52 +281,7 @@ namespace expressionWpfTest1
                         }
                     }
                 }
-                //int lcount = 0;
-                //int lastplus = -1;
-                //int lastsub = -1;
-
-                //for (int i = 0, start = 0; i < str.Length; i++)//分割字符串部分到expression (1+12)(121+1)/2/2/2/221
-                //{
-                //    while(lcount<lefts.Count&&lefts[lcount] < 0)//该括号被跳过
-                //    {
-                //        lcount++;
-                //    }
-                //    if (lcount < lefts.Count && lefts[lcount] <= i)//添加一块含有括号的块
-                //    {
-                //        Console.WriteLine("add3");
-                //        expressions.Add(str.Substring(lefts[lcount], rights[lcount] - lefts[lcount]+1));
-                //        i = rights[lcount];
-                //        start = i +1;
-                //        lcount++;
-                //    }
-                //    else if (str[i] == '+')
-                //    {
-                //            Console.WriteLine("add2");
-                //        expressions.Add(str.Substring(start, i - start));
-                //        start = i + 1;
-                //        lastplus = i;
-                //    }
-                //    else if (str[i] == '-')
-                //    {
-                //            Console.WriteLine("add1");
-                //        expressions.Add(str.Substring(start, i - start));
-                //        start = i;
-                //        lastsub = i;
-                //    }else if (i == str.Length - 1)//检查最后一项是否含在括号
-                //    {
-                //        if (lastsub != -1)
-                //        {
-                //            Console.WriteLine("suble");
-                //            expressions.Add(str.Substring(lastsub, str.Length - lastsub + 1));
-                //        }
-                //        if (lastplus != -1)
-                //        {
-                //            Console.WriteLine("addle");
-                //            expressions.Add(str.Substring(lastplus + 1, str.Length - lastplus - 1));
-                //        }
-
-                //    }
-                // }
+                
 
                 for (int i = 0; i < expressions.Count; i++)//去除空元素
                 {
@@ -336,25 +290,7 @@ namespace expressionWpfTest1
                         expressions.RemoveAt(i);
                     }
                 }
-                //}
-                //else            //没有括号
-                //{
-                //    string[] temp = str.Split('-');
-                //    for (int i = 0; i < temp.Length; i++)   //添加‘－’号
-                //    {
-                //        if (str[0] != '-'&&i==0)
-                //            continue;
-                //        temp[i] = '-' + temp[i];
-                //    }
-                //    for (int i = 0; i < temp.Length; i++)   //分割‘+’号
-                //    {
-                //        string[] temp2 = temp[i].Split('+');
-                //        for (int j = 0; j < temp2.Length; j++)
-                //        {
-                //            expressions.Add(temp2[j]);
-                //        }
-                //    }
-                //}
+               
             }
             public double deal()
             {
@@ -628,8 +564,8 @@ namespace expressionWpfTest1
                     {
                     
                         int left = 0;
-int right = 0;
-cut.Add(str.Length );
+                        int right = 0;
+                        cut.Add(str.Length );
                         for (int i = 0; i<cut.Count; i++)
                             Console.WriteLine("1111111111111111111111   " + cut[i]);
                         for (int i = 1; i<cut.Count; i++)
@@ -669,7 +605,7 @@ cut.Add(str.Length );
                                 flag = false;
                                 //expression[i].sub(tool.Function[j].Length+1,expression.Length-2)表达式求值，求值后函数
                                 divStringExp dse1 = new divStringExp(expressionTemp[i].Substring(tool.Function[j].Length + 1, expressionTemp[i].Length - tool.Function[j].Length - 2), VC);
-double va = dse1.deal();
+                                double va = dse1.deal();
                                 switch (j)
                                 {
                                     case 0:coefficient.Add(Math.Sin(va));break;
@@ -686,7 +622,7 @@ double va = dse1.deal();
                 {
                         flag = false;
                         List<string> t = new List<string>();
-int count = 0;
+                        int count = 0;
                     if (expressionTemp[i].IndexOf('(') >= 0)
                     {
                         for (int j = 0, start = 0; j<expressionTemp[i].Length; j++)
@@ -732,13 +668,13 @@ int count = 0;
                             for (int j = 0; j<t.Count; j++)
                                  Console.WriteLine(t[j]);
                             double tempResult = 0;
-divStringExp dse1 = new divStringExp(t[0], VC);
-tempResult = dse1.deal();
+                            divStringExp dse1 = new divStringExp(t[0], VC);
+                            tempResult = dse1.deal();
                             for (int j = 1; j<t.Count; j++)
                             {
-                            divStringExp dse = new divStringExp(t[j], VC);
-//t[j]表达式求值后阶乘
-tempResult = Math.Pow(tempResult, dse.deal());
+                                divStringExp dse = new divStringExp(t[j], VC);
+                                //t[j]表达式求值后阶乘
+                                tempResult = Math.Pow(tempResult, dse.deal());
                             }
                             coefficient.Add(tempResult);
                             Console.WriteLine("^^");
@@ -748,8 +684,8 @@ tempResult = Math.Pow(tempResult, dse.deal());
                     {
                         flag = false;
                         expressionTemp[i] = expressionTemp[i].Substring(1, expressionTemp[i].Length - 2);
-divStringExp dse1 = new divStringExp(expressionTemp[i], VC);
-coefficient.Add(dse1.deal());
+                        divStringExp dse1 = new divStringExp(expressionTemp[i], VC);
+                        coefficient.Add(dse1.deal());
                     }
                     if (flag)
                     {
@@ -770,9 +706,9 @@ coefficient.Add(dse1.deal());
                      if(flag)
                      {
                         DataTable table = new System.Data.DataTable();
-Console.WriteLine("num:"+ expressionTemp[i]);
+                        Console.WriteLine("num:"+ expressionTemp[i]);
                         string s1 = table.Compute(expressionTemp[i], "").ToString();
-coefficient.Add(Convert.ToDouble(s1));
+                        coefficient.Add(Convert.ToDouble(s1));
                         Console.WriteLine("numconvert:"+ Convert.ToDouble(s1));
                      }
                
@@ -786,8 +722,8 @@ coefficient.Add(Convert.ToDouble(s1));
             }
 
 
-            //找到外层括号，内层转为表达式，递归求值
             //sin,cos,tan
+            //找到外层括号，内层转为表达式，递归求值
             //找到参数
             //计算系数
             //参数与系数相乘
