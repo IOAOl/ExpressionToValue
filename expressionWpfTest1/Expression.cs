@@ -305,6 +305,7 @@ namespace expressionWpfTest1
                     else if (expressions[i][0] == '-')
                     {
                         divStringItem dsi = new divStringItem(expressions[i].Remove(0, 1), VC);
+                        result = result - dsi.deal();
                     }
                     else
                     {

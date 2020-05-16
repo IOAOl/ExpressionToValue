@@ -86,7 +86,7 @@
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Button" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1" Click="Button_Click" />
+            <Button Content="确定" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1" Click="Button_Click" FontSize="15"/>
             <TextBox x:Name="input" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.Column="0" Text="a13*a18*a19*a23*a111*a213*12*sin(10*a1)*a2*a1*a1*a3*a5*a6*a9*a10*a11*a12" FontSize="20"/>
         </Grid>
     </StackPanel>

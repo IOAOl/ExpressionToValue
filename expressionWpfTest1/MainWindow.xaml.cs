@@ -220,27 +220,7 @@ namespace expressionWpfTest1
                 }
             }
 
-            //string str = "sb";
-
-            //Label l = new Label();
-            //l.Content = str;
-            //l.Height = 30;
-            //labels.Add(l);
-
-            //Expression.s = "sss";
-            //listBox1.Items.Add(l);
-            //count++;
-            //TextBox textBlock = new TextBox();
-            //textBlock.Height = 30;
-            //textBlock.Width = listBox1.ActualWidth;
-            //textBlock.Text = Expression.s;
-            //textBlock.VerticalAlignment = VerticalAlignment.Center;
-            //listBox2.Items.Add(textBlock);
-            //Slider slider = new Slider();
-            //slider.Height = 30;
-            //slider.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //slider.Width = listBox3.ActualWidth - 40;
-            //listBox3.Items.Add(slider);
+           
         }
 
 
