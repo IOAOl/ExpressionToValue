@@ -1,0 +1,14 @@
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\bin\Debug\expressionWpfTest1.exe.config
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\bin\Debug\expressionWpfTest1.exe
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\bin\Debug\expressionWpfTest1.pdb
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.csprojAssemblyReference.cache
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\MainWindow.g.cs
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\App.g.cs
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1_MarkupCompile.cache
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1_MarkupCompile.lref
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\MainWindow.baml
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.g.resources
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.Properties.Resources.resources
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.csproj.GenerateResource.cache
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.exe
+D:\project_repository\c#\expressionWpfTest1\expressionWpfTest1\obj\Debug\expressionWpfTest1.pdb
