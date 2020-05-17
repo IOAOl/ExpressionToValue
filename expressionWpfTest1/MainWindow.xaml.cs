@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,12 +30,14 @@ namespace expressionWpfTest1
         List<Slider> slidersList;
         List<Label> valuesList;
         ScrollViewer sv1, sv2, sv3, sv4;
+        int CountToAnimation=0;
+        double ProcessToanimation=0;
         public MainWindow()
         {
 
             InitializeComponent();
-            EventManager.RegisterClassHandler(typeof(Slider), Slider.MouseMoveEvent, new RoutedEventHandler(undateslide));
-            EventManager.RegisterClassHandler(typeof(TextBox), TextBox.KeyDownEvent, new RoutedEventHandler(undaterange));
+            //EventManager.RegisterClassHandler(typeof(Slider), Slider.MouseMoveEvent, new RoutedEventHandler(undateslide));
+            //EventManager.RegisterClassHandler(typeof(TextBox), TextBox.KeyDownEvent, new RoutedEventHandler(undaterange));
             namesList = new List<Label>();
             rangesList = new List<TextBox>();
             slidersList = new List<Slider>();
@@ -134,6 +137,57 @@ namespace expressionWpfTest1
                 sv1.ScrollToVerticalOffset(sv4.VerticalOffset);
             }
         }
+        private void animation(object sender, RoutedEventArgs e)
+        {
+            Label label = sender as Label;
+            int count = 0;
+            foreach(Label l1 in listBox1.Items)
+            {
+                count++;
+                if (l1 == label)
+                    break;
+            }
+            ProcessToanimation = 0;
+            CountToAnimation = count;
+            System.Windows.Threading.DispatcherTimer tmr = new System.Windows.Threading.DispatcherTimer();
+            tmr.Interval = TimeSpan.FromSeconds(0.01);
+            tmr.Tick += new EventHandler(threads);
+            tmr.Start();
+        }
+
+        private void threads(object c,EventArgs e)
+        {
+            try
+            {
+                int count = CountToAnimation;
+                slidersList[count-1].Value = ProcessToanimation;
+                double td = (slidersList[count - 1].Value - 5) * Convert.ToDouble(rangesList[count - 1].Text);
+                td = td / 5;
+                valuesList[count - 1].Content = td;
+                variableCollection.vlist[count - 1].value = td;
+                exp.setVariables(variableCollection);
+                result.Content = exp.getValue();
+                ProcessToanimation += 0.025;
+                if (ProcessToanimation >= 10)
+                {
+                    slidersList[count-1].Value = 6;
+                    double ts = (slidersList[count - 1].Value - 5) * Convert.ToDouble(rangesList[count - 1].Text)/5;
+                    valuesList[count - 1].Content = ts;
+                    variableCollection.vlist[count - 1].value = ts;
+                    exp.setVariables(variableCollection);
+                    result.Content = exp.getValue();
+                    (c as System.Windows.Threading.DispatcherTimer).Stop();
+                }
+            }
+            catch (Exception e1)
+            {
+
+            }
+            
+
+        }
+
+
 
         private void undateslide(object sender, RoutedEventArgs e)
         {
@@ -191,18 +245,21 @@ namespace expressionWpfTest1
                     Label name = new Label();
                     name.Content = variableCollection.vlist[i].name;
                     name.Height = 30;
+                    name.MouseDoubleClick += new MouseButtonEventHandler(animation);
 
                     TextBox textBox = new TextBox();
                     textBox.Text = "5";
                     textBox.Height = 30;
                     textBox.Width = listBox1.Width;
                     textBox.VerticalAlignment = VerticalAlignment.Center;
+                    textBox.KeyDown += new KeyEventHandler(undaterange);
 
                     Slider slider1 = new Slider();
                     slider1.Height = 30;
                     slider1.Value = 6;
                     slider1.HorizontalAlignment = HorizontalAlignment.Center;
                     slider1.Width = 200;
+                    slider1.MouseMove += new MouseEventHandler(undateslide);
 
                     Label var_value = new Label();
                     var_value.Content = "1";
