@@ -615,6 +615,8 @@ namespace expressionWpfTest1
                                     case 3:coefficient.Add(Math.Abs(va));break;
                                     case 4:coefficient.Add(Math.Sqrt(va));break;
                                     case 5:coefficient.Add(Math.Exp(va)); break;
+                                    case 6:coefficient.Add(Math.Floor(va)); break;
+                                    case 7: { Random r = new Random(); coefficient.Add(r.NextDouble() * Math.Floor(va)); break; }
                                 }
                             }
                         }
@@ -732,7 +734,7 @@ namespace expressionWpfTest1
         }
         public static class tool
         {
-            public static string[] Function = { "sin", "cos", "tan", "abs", "sqrt", "exp" };
+            public static string[] Function = { "sin", "cos", "tan", "abs", "sqrt", "exp","floor" ,"random"};
         }
 
     }
