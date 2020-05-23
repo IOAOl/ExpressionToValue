@@ -18,10 +18,9 @@ namespace expressionWpfTest1
             private VariableCollection VC;
             public StringToValue(string s)
             {
-                str = s;
+                str =tool.predeal(s);
                 VC = new VariableCollection(s);
                 divStringExp dse = new divStringExp(s, VC);
-                value = dse.deal();
             }
             public double getValue()
             {
@@ -69,6 +68,13 @@ namespace expressionWpfTest1
                         for (int j = 0; j < tool.Function.Length; j++)
                         {
                             if (m[i].Value == tool.Function[j])
+                            {
+                                flag = 1;
+                            }
+                        }
+                        for (int j = 0; j < tool.BinaryFunction.Length; j++)
+                        {
+                            if (m[i].Value == tool.BinaryFunction[j])
                             {
                                 flag = 1;
                             }
@@ -127,33 +133,7 @@ namespace expressionWpfTest1
             }
 
         }
-        public class predeal
-        {                  //预处理表达式，并提取出变量
-            public predeal(string s)
-            {
-                dealStr(s);
-            }
-            public string dealStr(string s)     //处理括号与括号，变量与括号，数字与括号之间没有*，括号是否匹配，数字加字母的情况
-            {
-                int bracketCount = 0;
-                for (int i = 0; i < s.Length; i++)
-                {
-                    if (s[i] == '(')
-                    {
-                        bracketCount++;
-                    }
-                    if (s[i] == ')')
-                    {
-                        bracketCount--;
-                    }
-                }
-                if (bracketCount != 0)
-                {
-                    Console.WriteLine("bracker error");
-                }
-                return s;
-            }
-        }
+        
 
         public class divStringExp
         {
@@ -328,10 +308,14 @@ namespace expressionWpfTest1
         {
             private VariableCollection VC;
             private string str;
-            private string dividend;//被除数
-            private string divisor;//除数
+            //private string dividend;//被除数
+            //private string divisor;//除数
+            List<string> dividend;
+            List<string> dividor;
             public divStringItem(string s, VariableCollection V)
             {
+                dividend = new List<string>();
+                dividor = new List<string>();
                 VC = V;
                 str = s;
                 divFac();
@@ -339,161 +323,63 @@ namespace expressionWpfTest1
             }
             public void divFac()
             {
-                int left = str.IndexOf('(');
-                Stack<char> s = new Stack<char>();
-                List<int> lefts = new List<int>();
-                List<int> rights = new List<int>();
-                bool flag = false;
-                if (left >= 0)//是否有括号
+                bool[] bracket = new bool[str.Length];
+                int count = 0;
+                for (int i = 0; i < str.Length; i++)
                 {
-
-                    for (int i = 0; i < str.Length; i++)
-                    {
-                        if (str[i] == '(')
-                        {
-                            if (s.Count == 0)
-                            {
-                                lefts.Add(i);
-                            }
-                            flag = true;
-                            s.Push('(');
-                        }
-                        if (flag && str[i] == ')')
-                        {
-                            s.Pop();
-                            if (s.Count == 0)
-                            {
-                                rights.Add(i);
-                            }
-                        }
-                    }
-                    if (rights.Count != lefts.Count)
-                    {
-                        Console.WriteLine("input error" + lefts.Count + "and" + rights.Count);
-                    }
-
-                    for (int i = 0; i < lefts.Count; i++)
-                    {
-                        Console.WriteLine("fac左右括号：" + lefts[i] + "  " + rights[i]);
-                    }
-                    bool dived = true;
-                    bool change = false;
-                    for (int i = 0, j = 0; i < str.Length; i++)//检查不在括号内的/或者%
-                    {
-                        if (str[i] == '/')
-                        {
-                            while (j < rights.Count && rights[j] < i)
-                            {
-                                j++;
-                            }
-                            if (j < rights.Count && i > lefts[j] && i < rights[j])//如果在括号内
-                            {
-                                change = false;
-                            }
-                            else
-                            {
-                                change = true;
-                            }
-                        }
-                        if (dived)
-                        {
-                            if (str[i] == '/' && change)
-                            {
-                                dividend = dividend + '*';
-                            }
-                            else
-                            {
-                                dividend = dividend + str[i];
-                            }
-                        }
-                        if (str[i] == '/' && change)
-                            dived = false;
-                        if (str[i] == '*' && change)
-                            dived = true;
-                        if (!dived)
-                        {
-                            if (str[i] == '/' && change)
-                            {
-                                divisor = divisor + '*';
-                            }
-                            else
-                            {
-                                divisor = divisor + str[i];
-                            }
-                        }
-
-                    }
-                    if (divisor != null)
-                    {
-                        divisor = divisor.Remove(0, 1);
-                    }
-                    if (dividend[dividend.Length - 1] == '*' || dividend[dividend.Length - 1] == '/')
-                    {
-                        dividend = dividend.Remove(dividend.Length - 1, 1);
-                    }
+                    if (str[i] == '(')
+                        count++;
+                    else if (str[i] == ')')
+                        count--;
+                    if (count != 0)
+                        bracket[i] = true;
                 }
-                else
+                if (count != 0)
+                    throw new UserException("括号不匹配");
+                for (int i = str.Length - 1, start = str.Length - 1; i >= 0; i--)//1/3
                 {
-                    if (str.IndexOf('/') < 0)//无除号
+                    if (str[i] == '/')
                     {
-                        dividend = str;
-                        divisor = null;
-                    }
-                    else
-                    {
-                        bool ndiv = true;
-                        for (int i = 0; i < str.Length; i++)
+                        if (bracket[i] == false)
                         {
-                            if (ndiv)
-                            {
-                                if (str[i] == '/')
-                                {
-                                    dividend = dividend + '*';
-                                }
-                                else
-                                {
-                                    dividend = dividend + str[i];
-                                }
-                            }
-                            if (str[i] == '/')
-                                ndiv = false;
-                            if (str[i] == '*')
-                                ndiv = true;
-                            if (!ndiv)
-                            {
-                                if (str[i] == '/')
-                                {
-                                    divisor = divisor + '*';
-                                }
-                                else
-                                {
-                                    divisor = divisor + str[i];
-                                }
-                            }
-                        }
-                        divisor = divisor.Remove(0, 1);
-                        if (dividend[dividend.Length - 1] == '*' || dividend[dividend.Length - 1] == '/')
-                        {
-                            dividend = dividend.Remove(dividend.Length - 1, 1);
+                            dividor.Add(str.Substring(i + 1, start - i));
+                            start = i - 1;
                         }
                     }
+                    else if (str[i] == '*')
+                    {
+                        if (bracket[i] == false)
+                        {
+                            dividend.Add(str.Substring(i + 1, start - i));
+                            start = i - 1;
+                        }
+                    }
+                    else if (i == 0)
+                    {
+                        dividend.Add(str.Substring(i, start - i + 1));
+                    }
+
                 }
             }
             public double deal()
             {
-                divStringFac dsf1 = new divStringFac(dividend, VC);
-                double d = 1;
-                if (divisor != null)
+                double result = 1;
+                for (int i = 0; i < dividend.Count; i++)
                 {
-                    divStringFac dsf2 = new divStringFac(divisor, VC);
-                    d = dsf2.deal();
+                    divStringFac f1 = new divStringFac(dividend[i], VC);
+                    result = f1.deal() * result;
                 }
-                return dsf1.deal() / d;
+                for (int i = 0; i < dividor.Count; i++)
+                {
+                    divStringFac f1 = new divStringFac(dividor[i], VC);
+                    result = result / f1.deal();
+                }
+                return result;
             }
             public void show()
             {
-                Console.WriteLine("end：" + dividend);
-                Console.WriteLine("sor：" + divisor);
+                //Console.WriteLine("end：" + dividend);
+                //Console.WriteLine("sor：" + divisor);
             }
         }
         public class divStringFac
@@ -620,6 +506,48 @@ namespace expressionWpfTest1
                                 }
                             }
                         }
+                        for (int j = 0; j < tool.BinaryFunction.Length; j++)//函数
+                        {
+                            if (tool.BinaryFunction[j].Length - 1 < expressionTemp[i].Length && expressionTemp[i].Substring(0, tool.BinaryFunction[j].Length) == tool.BinaryFunction[j])
+                            {
+                                Console.WriteLine("exp2");
+                                flag = false;
+                                for (int k = tool.BinaryFunction[j].Length + 1; k < expressionTemp[i].Length - 2; k++)
+                                {
+                                    if (expressionTemp[i][k] == ',')
+                                    {
+                                        bool flag1 = false;
+                                        for (int h = 0; h < lefts.Count; h++)
+                                        {
+                                            if (k > lefts[h] && k < rights[h])
+                                            {
+                                                flag1 = true;
+                                            }
+                                        }
+                                        if (flag1 == false)//log(2,3) k=5 8 3
+                                        {
+                                            divStringExp dse1 = new divStringExp(expressionTemp[i].Substring(tool.BinaryFunction[j].Length + 1, k - tool.BinaryFunction[j].Length - 1), VC);
+                                            divStringExp dse2 = new divStringExp(expressionTemp[i].Substring(k + 1, expressionTemp[i].Length - k - 2), VC);
+                                            double n1 = dse1.deal();
+                                            double n2 = dse2.deal();
+                                            if (n1 < 0 || n1 == 1)
+                                            {
+                                                Console.WriteLine("log1");
+                                                if (n1 < 0)
+                                                    throw new UserException("底数不能小于0");
+                                                else
+                                                    throw new UserException("底数不能等于1");
+                                            }
+                                            else
+                                                switch (j)
+                                                {
+                                                    case 0: coefficient.Add(Math.Log(n2) / Math.Log(n1)); Console.WriteLine(Math.Log(n1) / Math.Log(n2)); break;
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (expressionTemp[i].IndexOf('^') > 0&&flag)         //次方 ((2)^(2+3))^(a1+9)  (2^3)^(3^2)
                 {
@@ -735,7 +663,28 @@ namespace expressionWpfTest1
         public static class tool
         {
             public static string[] Function = { "sin", "cos", "tan", "abs", "sqrt", "exp","floor" ,"random"};
+            public static string[] BinaryFunction = { "log" };
+            public static string  predeal(string s)
+            {
+                for(int i = 1; i < s.Length; i++)
+                {
+                    if (char.IsNumber(s[i - 1]) && char.IsLetter(s[i]))
+                        s=s.Insert(i, "*");
+                    if(s[i-1]==')'&&s[i]=='(')
+                        s=s.Insert(i, "*");
+                }
+                return s;
+            }
         }
+        public class UserException : ApplicationException//由用户程序引发，用于派生自定义的异常类型
+        {
 
+            public UserException() { }
+            public UserException(string message)
+                : base(message) { }
+            public UserException(string message, Exception inner)
+                : base(message, inner) { }
+
+        }
     }
 }

@@ -77,6 +77,7 @@ namespace expressionWpfTest1
                 {
                     MessageBox.Show("只能输入数字或者数字过大");
                 }
+                
             }
         }
 
@@ -166,7 +167,14 @@ namespace expressionWpfTest1
                 valuesList[count - 1].Content = td;
                 variableCollection.vlist[count - 1].value = td;
                 exp.setVariables(variableCollection);
-                result.Content = exp.getValue();
+                try
+                {
+                    result.Content = exp.getValue();
+                }
+                catch (UserException ue)
+                {
+                    result.Content = ue.Message;
+                }
                 ProcessToanimation += 0.025;
                 if (ProcessToanimation >= 10)
                 {
@@ -175,15 +183,22 @@ namespace expressionWpfTest1
                     valuesList[count - 1].Content = ts;
                     variableCollection.vlist[count - 1].value = ts;
                     exp.setVariables(variableCollection);
-                    result.Content = exp.getValue();
+                    try
+                    {
+                        result.Content = exp.getValue();
+                    }
+                    catch (UserException ue)
+                    {
+                        result.Content = ue.Message;
+                    }
                     (c as System.Windows.Threading.DispatcherTimer).Stop();
                 }
             }
             catch (Exception e1)
             {
-
             }
             
+
 
         }
 
@@ -213,7 +228,14 @@ namespace expressionWpfTest1
                     valuesList[i-1].Content = td;
                     variableCollection.vlist[i-1].value = td;
                     exp.setVariables(variableCollection);
-                    result.Content = exp.getValue();
+                    try
+                    {
+                        result.Content = exp.getValue();
+                    }
+                    catch (UserException ue)
+                    {
+                        result.Content = ue.Message;
+                    }
                     //MessageBox.Show(exp.getValue().ToString());
                 }
             }
@@ -226,58 +248,64 @@ namespace expressionWpfTest1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string s = input.Text;
-            exp = new StringToValue(s);
-            variableCollection = exp.GetVariables();
-            result.Content =exp.getValue();
-            listBox1.Items.Clear();
-            listBox2.Items.Clear();
-            listBox3.Items.Clear();
-            listBox4.Items.Clear();
-            namesList.Clear();
-            rangesList.Clear();
-            slidersList.Clear();
-            valuesList.Clear();
-            if (variableCollection.vlist != null)
+                string s = input.Text;
+                exp = new StringToValue(s);
+                variableCollection = exp.GetVariables();
+            try
             {
-                for (int i = 0; i < variableCollection.vlist.Length; i++)
-                {
-                    Label name = new Label();
-                    name.Content = variableCollection.vlist[i].name;
-                    name.Height = 30;
-                    name.MouseDoubleClick += new MouseButtonEventHandler(animation);
-
-                    TextBox textBox = new TextBox();
-                    textBox.Text = "5";
-                    textBox.Height = 30;
-                    textBox.Width = listBox1.Width;
-                    textBox.VerticalAlignment = VerticalAlignment.Center;
-                    textBox.KeyDown += new KeyEventHandler(undaterange);
-
-                    Slider slider1 = new Slider();
-                    slider1.Height = 30;
-                    slider1.Value = 6;
-                    slider1.HorizontalAlignment = HorizontalAlignment.Center;
-                    slider1.Width = 200;
-                    slider1.MouseMove += new MouseEventHandler(undateslide);
-
-                    Label var_value = new Label();
-                    var_value.Content = "1";
-                    var_value.Height = 30;
-
-                    namesList.Add(name);
-                    rangesList.Add(textBox);
-                    slidersList.Add(slider1);
-                    valuesList.Add(var_value);
-
-                    listBox1.Items.Add(name);
-                    listBox2.Items.Add(textBox);
-                    listBox3.Items.Add(slider1);
-                    listBox4.Items.Add(var_value);
-                }
+                result.Content = exp.getValue();
             }
+            catch (UserException ue)
+            {
+                result.Content = ue.Message;
+            }
+                listBox1.Items.Clear();
+                listBox2.Items.Clear();
+                listBox3.Items.Clear();
+                listBox4.Items.Clear();
+                namesList.Clear();
+                rangesList.Clear();
+                slidersList.Clear();
+                valuesList.Clear();
+                if (variableCollection.vlist != null)
+                {
+                    for (int i = 0; i < variableCollection.vlist.Length; i++)
+                    {
+                        Label name = new Label();
+                        name.Content = variableCollection.vlist[i].name;
+                        name.Height = 30;
+                        name.MouseDoubleClick += new MouseButtonEventHandler(animation);
 
-           
+                        TextBox textBox = new TextBox();
+                        textBox.Text = "5";
+                        textBox.Height = 30;
+                        textBox.Width = listBox1.Width;
+                        textBox.VerticalAlignment = VerticalAlignment.Center;
+                        textBox.KeyDown += new KeyEventHandler(undaterange);
+
+                        Slider slider1 = new Slider();
+                        slider1.Height = 30;
+                        slider1.Value = 6;
+                        slider1.HorizontalAlignment = HorizontalAlignment.Center;
+                        slider1.Width = 200;
+                        slider1.MouseMove += new MouseEventHandler(undateslide);
+
+                        Label var_value = new Label();
+                        var_value.Content = "1";
+                        var_value.Height = 30;
+
+                        namesList.Add(name);
+                        rangesList.Add(textBox);
+                        slidersList.Add(slider1);
+                        valuesList.Add(var_value);
+
+                        listBox1.Items.Add(name);
+                        listBox2.Items.Add(textBox);
+                        listBox3.Items.Add(slider1);
+                        listBox4.Items.Add(var_value);
+                    }
+                }
+
         }
 
 

@@ -5,34 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:expressionWpfTest1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="522" Width="750" Margin="10" Loaded="Window_Loaded" ResizeMode="NoResize">
-        
-    <!--<Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="10*"/>
-        </Grid.ColumnDefinitions>
-
-        <ListView x:Name="listView" Grid.Column="0" BorderBrush="Black"  >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="序列号" Width="100" />
-                    <GridViewColumn Header="书名" Width="100"/>
-                    <GridViewColumn Header="类型" Width="100" />
-                    <GridViewColumn Header="作者" Width="100" />
-                </GridView>
-            </ListView.View>
-            <Button />
-        </ListView>
-
-    </Grid>-->
-
-
-
+        Title="ExpressionToValue" Height="520.797" Width="836.6" Margin="10" Loaded="Window_Loaded" ResizeMode="NoResize">
 
 
     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid Height="30">
+        <Grid Height="30"  >
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" Height="30" Margin="0,0,0,0" VerticalAlignment="Top" >
                 <Label x:Name="result" Content="" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Height="30" Width="202" FontSize="16"/>
             </Border>
@@ -85,9 +62,10 @@
                 <ColumnDefinition Width="410*"/>
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
-
-            <Button Content="确定" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1" Click="Button_Click" FontSize="15"/>
-            <TextBox x:Name="input" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.Column="0" Text="a13*a18*a19*a23*a111*a213*12*sin(10*a1)*a2*a1*a1*a3*a5*a6*a9*a10*a11*a12" FontSize="20"/>
+            <Button Content="确定"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="Button_Click" FontSize="15"/>
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" Height="30" Margin="0,0,0,0" VerticalAlignment="Top" >
+                <TextBox x:Name="input" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Text="a13*a18*a19*a23*a111*a213*12*sin(10*a1)*a2*a1*a1*a3*a5*a6*a9*a10*a11*a12" FontSize="18"/>
+            </Border>
         </Grid>
     </StackPanel>
 </Window>
